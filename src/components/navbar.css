@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #074b29 0%, #10b981 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--muted) 100%);
+  color: var(--c-ivory);
   padding: 15px 50px;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .nav-links li:hover {
-  color: #ddd;
+  color: var(--c-gray);
 }
 
 .cart {

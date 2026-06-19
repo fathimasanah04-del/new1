@@ -1,0 +1,71 @@
+.add-product-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--c-light-tan), var(--bg));
+  padding: 20px;
+}
+
+.add-product-box {
+  width: 100%;
+  max-width: 480px;
+  background: var(--c-ivory);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  text-align: left;
+}
+
+.add-product-box h1 {
+  margin-bottom: 24px;
+  color: var(--text);
+  text-align: center;
+}
+
+.add-product-form label {
+  display: block;
+  margin-bottom: 18px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.add-product-form input,
+.add-product-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 8px;
+  border: 1px solid #c4c4c4;
+  border-radius: 12px;
+  background: #fafafa;
+  font-size: 15px;
+  color: #333;
+}
+
+.add-product-form textarea {
+  resize: vertical;
+}
+
+.add-product-form button {
+  width: 100%;
+  padding: 14px 16px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--c-ivory);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.add-product-form button:hover {
+  background: rgba(0,0,0,0.06);
+}
+
+.form-message {
+  margin-top: 18px;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+}

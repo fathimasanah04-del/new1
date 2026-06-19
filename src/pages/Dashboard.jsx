@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { MutatingDots } from 'react-loader-spinner'
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import Card from "../components/Card"
@@ -50,12 +51,35 @@ function Dashboard() {
           display: "flex",
           gap: "20px",
           flexWrap: "wrap",
+          justifyContent: "center",
           padding: "20px",
           minHeight: "calc(100vh - 160px)",
         }}
       >
         {loading ? (
-          <p>Loading products...</p>
+          <div style={{ position: 'relative', minHeight: 200 }}>
+            <div style={{
+              position: 'fixed',
+              inset: 0,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(255,255,255,0.85)',
+              zIndex: 9999,
+            }}>
+              <MutatingDots
+                visible={true}
+                height="120"
+                width="120"
+                color="#72383D"
+                secondaryColor="#72383D"
+                radius="12.5"
+                ariaLabel="mutating-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          </div>
         ) : error ? (
           <p>{error}</p>
         ) : products.length === 0 ? (

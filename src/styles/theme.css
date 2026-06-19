@@ -1,0 +1,28 @@
+/* Theme color variables */
+:root {
+  --c-dark: #322D29; /* deep brown */
+  --c-deep: #72383D; /* deep red */
+  --c-tan: #AC9C8D;  /* tan */
+  --c-light-tan: #D1C7BD; /* light tan */
+  --c-gray: #D9D9D9; /* light gray */
+  --c-ivory: #EFE9E1; /* ivory */
+
+  --bg: var(--c-ivory);
+  --card-bg: var(--c-light-tan);
+  --accent: var(--c-deep);
+  --muted: var(--c-tan);
+  --text: var(--c-dark);
+  --muted-border: rgba(50,45,41,0.08);
+}
+
+html, body, #root {
+  height: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* Utility */
+.btn-accent {
+  background: var(--accent);
+  color: var(--c-ivory);
+}

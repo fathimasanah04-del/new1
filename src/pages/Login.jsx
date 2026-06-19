@@ -1,21 +1,41 @@
 import "./login.css"
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import {z} from "zod";
+import { MutatingDots } from "react-loader-spinner"
+
+const Loginschema = z.object({
+    email: z.string().min(1,"Email is required").email("pls enter a valid email"),
+    password: z.string().min(1,"password is required")
+})
 
 function Login() {
 const navigate = useNavigate()
-const [username, setUsername] = useState("")
+const [email, setEmail] = useState("")
 const [password, setPassword] = useState("")
 const [message, setMessage] = useState("")
+const [loading, setLoading] = useState(false)
+const [initialLoading, setInitialLoading] = useState(true)
+
+useEffect(() => {
+    const t = setTimeout(() => setInitialLoading(false), 1200)
+    return () => clearTimeout(t)
+}, [])
 
 
 const handleLogin = async () => {
-    if (!username || !password) {
-        setMessage("❌ Please enter username and password")
+    if (!email || !password) {
+        setMessage("❌ Please enter email and password")
+        return
+    }
+    const validation = Loginschema.safeParse({ email, password })
+    if (!validation.success) {
+        setMessage(validation.error.issues[0].message)
         return
     }
 
     try {
+        setLoading(true)
         const response = await fetch(
             "https://sample-e-1.onrender.com/login",
             {
@@ -24,7 +44,7 @@ const handleLogin = async () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email: username,
+                    email: email,
                     password: password,
                 }),
             }
@@ -39,13 +59,16 @@ const handleLogin = async () => {
                 localStorage.setItem("token", data.token)
             }
 
+            setLoading(false)
             navigate("/Dashboard")
         } else {
             setMessage(data.message || "❌ Login Failed")
+            setLoading(false)
         }
     } catch (error) {
         console.error(error)
         setMessage("❌ Server error. Please try again.")
+        setLoading(false)
     }
 }
 
@@ -55,10 +78,10 @@ return (
             <h1>Login</h1>
 
             <input
-                type="text"
-                placeholder="Username or Email"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
 
             <input
@@ -68,9 +91,31 @@ return (
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button onClick={handleLogin}>
-                Login
-            </button>
+            <button onClick={handleLogin} disabled={initialLoading || loading}>Login</button>
+
+            {(initialLoading || loading) && (
+                <div style={{
+                    position: 'fixed',
+                    inset: 0,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'rgba(255,255,255,0.85)',
+                    zIndex: 9999,
+                }}>
+                    <MutatingDots
+                        visible={true}
+                        height="120"
+                        width="120"
+                        color="#72383D"
+                        secondaryColor="#72383D"
+                        radius="12.5"
+                        ariaLabel="mutating-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    />
+                </div>
+            )}
 
             <p>{message}</p>
 
