@@ -1,7 +1,8 @@
 import "./login.css"
 import { Link, useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import {z} from "zod";
+import { animate, hover } from "motion"
 import { MutatingDots } from "react-loader-spinner"
 
 const Loginschema = z.object({
@@ -16,10 +17,20 @@ const [password, setPassword] = useState("")
 const [message, setMessage] = useState("")
 const [loading, setLoading] = useState(false)
 const [initialLoading, setInitialLoading] = useState(true)
+const loginButtonRef = useRef(null)
 
 useEffect(() => {
     const t = setTimeout(() => setInitialLoading(false), 1200)
     return () => clearTimeout(t)
+}, [])
+
+useEffect(() => {
+    if (!loginButtonRef.current) return
+
+    return hover(loginButtonRef.current, (element) => {
+        animate(element, { scale: 1.05 })
+        return () => animate(element, { scale: 1 })
+    })
 }, [])
 
 
@@ -91,7 +102,7 @@ return (
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button onClick={handleLogin} disabled={initialLoading || loading}>Login</button>
+            <button ref={loginButtonRef} onClick={handleLogin} disabled={initialLoading || loading}>Login</button>
 
             {(initialLoading || loading) && (
                 <div style={{
